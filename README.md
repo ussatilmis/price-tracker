@@ -1,4 +1,5 @@
 # Price Tracker — Web Scraper with Incremental Archive & Excel Reports
+![Example Excel report](ornek-rapor.png)
 
 A production-style price monitoring tool. It scrapes product listings, keeps an
 **incremental CSV archive**, detects **price changes** between runs, and produces a
