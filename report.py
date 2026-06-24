@@ -93,8 +93,8 @@ def _sheet_changes(ws, rows):
 def build_report():
     wb = Workbook()
     _sheet_latest(wb.active, _read_csv(config.LATEST_CSV))
-    wb.active.title = "Guncel Fiyatlar"
-    _sheet_changes(wb.create_sheet("Fiyat Degisimleri"), _read_csv(config.HISTORY_CSV))
+    wb.active.title = "Current Prices"
+    _sheet_changes(wb.create_sheet("Price Changes"), _read_csv(config.HISTORY_CSV))
     os.makedirs(config.DATA_DIR, exist_ok=True)
     wb.save(config.REPORT_XLSX)
     return config.REPORT_XLSX
