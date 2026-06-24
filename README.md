@@ -18,6 +18,25 @@ and reporting.
 - Generates `price_report.xlsx`:
   - **Current Prices** sheet — all products, currency-formatted
   - **Price Changes** sheet — drops in green, increases in red, new items in yellow
+ 
+## Two fetch engines
+
+The scraper supports two interchangeable fetch engines, selected with a single
+setting in `config.py`:
+
+- **`requests`** — fast and lightweight, for static sites where the HTML arrives complete.
+- **`playwright`** — drives a real headless browser, for JavaScript-rendered sites where
+  content is built on the client after the page loads. It waits for the target element
+  (`wait_for`) before reading the HTML.
+
+Only the fetch layer changes. Parsing, archiving, and reporting stay identical regardless
+of engine — so the same pipeline handles both static and dynamic sites.
+
+```python
+# config.py
+"engine": "requests",     # or "playwright"
+"wait_for": "article.product_pod",
+```
 
 ## Architecture
 
