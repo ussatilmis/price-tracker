@@ -52,20 +52,20 @@ def _autosize(ws, widths):
 
 
 def _sheet_latest(ws, rows):
-    headers = ["Urun", "Fiyat", "Stokta", "URL"]
+    headers = ["Product", "Price", "In Stock", "URL"]
     _style_header(ws, headers)
     for i, r in enumerate(rows, start=2):
         ws.cell(row=i, column=1, value=r.get("title")).border = BORDER
         pc = ws.cell(row=i, column=2, value=_to_float(r.get("price")))
         pc.number_format = "#,##0.00"
         pc.border = BORDER
-        ws.cell(row=i, column=3, value="Evet" if r.get("in_stock") == "True" else "Hayir").border = BORDER
+        ws.cell(row=i, column=3, value="Yes" if r.get("in_stock") == "True" else "No").border = BORDER
         ws.cell(row=i, column=4, value=r.get("url")).border = BORDER
     _autosize(ws, [55, 12, 10, 60])
 
 
 def _sheet_changes(ws, rows):
-    headers = ["Tarih", "Urun", "Durum", "Eski Fiyat", "Yeni Fiyat", "Fark"]
+    headers = ["Date", "Product", "Status", "Old Price", "New Price", "Change"]
     _style_header(ws, headers)
     # en yeni olaylar ustte
     rows = sorted(rows, key=lambda r: r.get("scraped_at", ""), reverse=True)
@@ -76,7 +76,7 @@ def _sheet_changes(ws, rows):
         values = [
             r.get("scraped_at"),
             r.get("title"),
-            {"NEW": "YENI", "PRICE_CHANGE": "FIYAT DEGISTI"}.get(change, change),
+            {"NEW": "NEW", "PRICE_CHANGE": "PRICE CHANGE"}.get(change, change),
             _to_float(r.get("old_price")),
             _to_float(r.get("price")),
             delta,
